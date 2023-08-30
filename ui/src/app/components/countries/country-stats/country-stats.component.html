@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <th>Name</th>
+        <th>CountryCode3</th>
+        <th>Year</th>
+        <th>Population</th>
+        <th>Gdp</th>
+    </tr>
+    <tr *ngFor="let countryStat of countryStats | async">
+        <td>
+            {{countryStat.name}}
+        </td>
+        <td>
+            {{countryStat.countryCode3}}
+        </td>
+        <td>
+            {{countryStat.year}}
+        </td>
+        <td>
+            {{countryStat.population}}
+        </td>
+        <td>
+            {{countryStat.gdp}}
+        </td>
+    </tr>
+</table>

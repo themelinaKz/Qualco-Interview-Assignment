@@ -1,0 +1,11 @@
+form {
+    margin: 15px;
+    .filter {
+        margin: 2px;
+        display: block;
+        label {
+            font-weight: bold;
+            margin-right: 1px;
+        }
+    }
+}

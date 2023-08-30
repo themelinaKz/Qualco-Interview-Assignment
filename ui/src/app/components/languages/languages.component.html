@@ -1,0 +1,30 @@
+<button (click)="goBack()">
+    Go Back
+</button>
+
+<table>
+    <tr *ngIf="officialLanguage">
+        <th>
+            Official Language
+        </th>
+        <td>
+            <ul>
+                <li>
+                    {{officialLanguage.language}}
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {{officialLanguage ? 'Other' : 'Spoken'}} Languages
+        </th>
+        <td>
+            <ul>
+                <li *ngFor="let language of nonOfficialLanguages | async">
+                    {{language.language}}
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thkouzoumpasi.qualcointerview.continents.mapper.ContinentMapper">
+    <resultMap id="continentResultMap" type="ContinentInfo">
+        <result property="continentName" column="continentName"/>
+        <result property="regionName" column="regionName"/>
+        <result property="countryName" column="countryName"/>
+        <result property="year" column="year"/>
+        <result property="population" column="population"/>
+        <result property="gdp" column="gdp"/>
+    </resultMap>
+
+    <select id="getAllContinentsInfo" resultMap="continentResultMap">
+        SELECT continents.name as continentName,
+               regions.name as regionName,
+               countries.name as countryName,
+               year,
+               population,
+               gdp
+        FROM continents
+            INNER JOIN regions USING(continent_id)
+            INNER JOIN countries USING(region_id)
+            INNER JOIN country_stats USING(country_id)
+        WHERE (#{regionName} IS NULL OR #{regionName} = regions.name) AND
+              (#{fromYear} = -1 OR year >= #{fromYear}) AND
+              (#{toYear} = -1 OR #{toYear} >= year )
+    </select>
+
+</mapper>

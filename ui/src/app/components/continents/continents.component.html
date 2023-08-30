@@ -1,0 +1,57 @@
+<form>
+    <div class="filter">
+        <label for="regionFilter">Region</label>
+        <select name="regionFilter" id="regionFilter" #regionFilter>
+            <option value="" selected>-- Select a region</option>
+            <option *ngFor="let region of regions | async" [value]="region.name">{{region.name}}</option>
+        </select>
+    </div>
+    
+    <br>
+    
+    <div class="filter">
+        <label for="fromYearFilter">From Year</label>
+        <input type="number" name="fromYearFilter" #fromYearFilter id="fromYearFilter">
+    </div>
+    
+    <br>
+    
+    <div class="filter">
+        <label for="toYearFilter">To Year</label>
+        <input type="number" name="toYearFilter" #toYearFilter id="toYearFilter">
+    </div>
+    
+    <br>
+    <button type="submit" (click)="applyFilters(regionFilter.value, fromYearFilter.value, toYearFilter.value)">Apply Filters</button>
+</form>
+
+<table>
+    <tr>
+        <th>Continent</th>
+        <th>Region</th>
+        <th>Country</th>
+        <th>Year</th>
+        <th>Population</th>
+        <th>Gdp</th>
+    </tr>
+    <tr *ngFor="let data of continentsInfo | async">
+        <td>
+            {{data.continentName}}
+        </td>
+        <td>
+            {{data.regionName}}
+        </td>
+        <td>
+            {{data.countryName}}
+        </td>
+        <td>
+            {{data.year}}
+        </td>
+        <td>
+            {{data.population}}
+        </td>
+        <td>
+            {{data.gdp}}
+        </td>
+    </tr>
+</table>

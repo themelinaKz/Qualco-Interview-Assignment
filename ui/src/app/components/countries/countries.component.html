@@ -1,0 +1,5 @@
+<ol>
+    <li *ngFor="let country of countries | async" (click)="showLanguages(country.id)">
+        {{country.id}}, {{country.name}}, {{country.area}}, {{country.countryCode2}}
+    </li>
+</ol>

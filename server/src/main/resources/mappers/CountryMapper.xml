@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thkouzoumpasi.qualcointerview.countries.mapper.CountryMapper">
+    <resultMap id="countryResultMap" type="Country">
+        <id property="id" column="country_id"/>
+        <result property="name" column="name"/>
+        <result property="area" column="area"/>
+        <result property="nationalDay" column="national_day"/>
+        <result property="countryCode2" column="country_code2"/>
+        <result property="countryCode3" column="country_code3"/>
+    </resultMap>
+    <resultMap id="countryWithStatsResultMap" type="CountryWithStats">
+        <result property="name" column="name"/>
+        <result property="countryCode3" column="country_code3"/>
+        <result property="year" column="year"/>
+        <result property="population" column="population"/>
+        <result property="gdp" column="gdp"/>
+    </resultMap>
+    <resultMap id="countryLanguageResultMap" type="CountryLanguage">
+        <id property="id" column="language_id"/>
+        <result property="language" column="language"/>
+        <result property="official" column="official"/>
+    </resultMap>
+
+    <select id="getAllCountries" resultMap="countryResultMap">
+        SELECT * FROM countries
+    </select>
+
+    <select id="getAllCountriesWithStats" resultMap="countryWithStatsResultMap">
+        SELECT name, country_code3, year, population, gdp
+        FROM countries
+            INNER JOIN (
+                SELECT *
+                FROM country_stats
+                GROUP BY country_id
+                HAVING MAX(gdp / population)
+            ) temp USING(country_id)
+    </select>
+
+    <select id="getAllLanguagesForACountry" resultMap="countryLanguageResultMap">
+        SELECT language_id, language, official
+        FROM languages
+            INNER JOIN country_languages USING(language_id)
+        WHERE country_id = #{countryId}
+    </select>
+</mapper>
